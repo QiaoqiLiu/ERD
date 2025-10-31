@@ -1,0 +1,74 @@
+erdiagram MiniProject1
+notation=crowsfoot
+
+// Entities for Mini Project #1
+entity Customer {
+    customer_id: INTEGER key
+    name: VARCHAR(100)
+    phone_number: VARCHAR(20)
+    email: VARCHAR(100)
+}
+
+entity Invoice {
+    invoice_id: INTEGER key
+    invoice_date: DATE
+    customer_id: INTEGER
+    total_amount: DECIMAL(10,2)
+    status: VARCHAR(20)
+}
+
+entity Line {
+    line_id: INTEGER key
+    invoice_id: INTEGER
+    product_code: VARCHAR(20)
+    quantity: INTEGER
+    unit_price: DECIMAL(10,2)
+}
+
+entity Manufacturer {
+    manufacturer_id: INTEGER key
+    name: VARCHAR(100)
+    category: VARCHAR(50)
+    email: VARCHAR(100)
+    status: VARCHAR(20)
+    phone: VARCHAR(20)
+}
+
+entity Promotion {
+    promotion_id: INTEGER key
+    customer_id: INTEGER
+    start_date: DATE
+    end_date: DATE
+    discount: DECIMAL(5,2)
+    description: TEXT
+}
+
+entity Product {
+    product_code: VARCHAR(20) key
+    manufacturer_id: INTEGER
+    name: VARCHAR(100)
+    price: DECIMAL(10,2)
+    stock_level: INTEGER
+    status: VARCHAR(20)
+}
+
+// Relationships (crow's-foot notation)
+relationship Customer_Invoices {
+    Customer[1] -> Invoice[0..N]
+}
+
+relationship Invoice_Lines {
+    Invoice[1] -> Line[1..N]
+}
+
+relationship Product_Lines {
+    Product[1] -> Line[0..N]
+}
+
+relationship Customer_Promotions {
+    Customer[1] -> Promotion[0..N]
+}
+
+relationship Manufacturer_Products {
+    Manufacturer[1] -> Product[0..N]
+}
